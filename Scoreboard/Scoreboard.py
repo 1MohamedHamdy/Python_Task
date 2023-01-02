@@ -49,17 +49,17 @@ image_Background2 = photo_2.subsample(2,2)
 
 # editing of the image resizing of it 
 # resizing decreased by increasing the number
-B_1  =Button(window_1 , text = "Increment The button " , bd = '0' ,image=image_Background1, command = ButtonNetherlandPressTracker)
+B_1  =Button(window_1 , bd = '0' ,image=image_Background1, command = ButtonNetherlandPressTracker)
 
 B_1.place(x = 650,y=150)
-B_2  =Button(window_1 , text = "Increment The button " , bd = '0' ,image=image_Background2, command = ButtonSengalPressTracker)
+B_2  =Button(window_1 , bd = '0' ,image=image_Background2, command = ButtonSengalPressTracker)
 
 B_2.place(x = 1000,y=140)
 
 # Adding button to a specific window with a specific name and specific button name 
 # bd border size
 # destroy : delete the application 
-B_3  =Button(window_1 , text = "Close the window" , bd = '5' , command = window_1.destroy)
+B_3  =Button(window_1 , bd = '5' , command = window_1.destroy)
 B_3.place(x=200,y=470)
 
 text_box1 = Text(
