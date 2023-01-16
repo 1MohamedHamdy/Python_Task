@@ -1,0 +1,5 @@
+# Python_Task![calc_1](https://user-images.githubusercontent.com/117542420/200307961-8fd29bb0-f6e1-4104-aff7-ba306ae14393.PNG)
+![calc_2](https://user-images.githubusercontent.com/117542420/200308010-04c9c7a0-188b-41c2-be4f-7405ecf3b432.PNG)
+![calc_3](https://user-images.githubusercontent.com/117542420/200308048-7c1740ec-ae5a-4d84-b6a6-1a70afbb6c36.PNG)
+![calc_4](https://user-images.githubusercontent.com/117542420/200308065-069737fc-3737-42ca-a7e3-f0972d3b5499.PNG)
+![calc_5](https://user-images.githubusercontent.com/117542420/200308085-9d82a450-0b2d-4d5d-97c1-403659216e15.PNG)
