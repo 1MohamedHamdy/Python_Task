@@ -1,13 +1,14 @@
 import sys
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtSerialPort import QSerialPort, QSerialPortInfo
-from tkinter.constants import OFF
-from PyQt5.Qt import QColor
+from PyQt5.Qt import QColor,QIcon
 
 class Chatty(QtWidgets.QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("ChaTTY")
+        self.setWindowIcon(QIcon("logo.png"))
+
         self.setFixedSize(610,480)
         
         self.received_data_text_edit = QtWidgets.QTextEdit(self)
