@@ -2,38 +2,43 @@ import sys
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtSerialPort import QSerialPort, QSerialPortInfo
 from tkinter.constants import OFF
+from PyQt5.Qt import QColor
 
 class Chatty(QtWidgets.QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("ChaTTY")
-        self.setGeometry(100, 100, 600, 400)
-
+        self.setFixedSize(610,480)
+        
         self.received_data_text_edit = QtWidgets.QTextEdit(self)
         self.received_data_text_edit.setReadOnly(True)
-        self.received_data_text_edit.move(10, 10)
+        self.received_data_text_edit.move(10, 50)
         self.received_data_text_edit.resize(290, 380)
         font = QtGui.QFont("Courier")
         self.received_data_text_edit.setFont(font)
-        self.received_data_text_edit.setTextColor(QtCore.Qt.yellow)
+        color = QColor('white')
+        self.received_data_text_edit.setTextColor(color)
         self.received_data_text_edit.setStyleSheet("background-color:black;")
 
         self.sent_data_text_edit = QtWidgets.QTextEdit(self)
         self.sent_data_text_edit.setReadOnly(False)
-        self.sent_data_text_edit.move(310, 10)
+        self.sent_data_text_edit.move(310, 50)
         self.sent_data_text_edit.resize(290, 380)
+        self.sent_data_text_edit.setCursorWidth(0)
         font = QtGui.QFont("Courier")
         self.sent_data_text_edit.setFont(font)
-        self.sent_data_text_edit.setTextColor(QtCore.Qt.yellow)
+        self.sent_data_text_edit.setTextColor(color)
         self.sent_data_text_edit.setStyleSheet("background-color:black;")
 
 
         self.send_button = QtWidgets.QPushButton("Send", self)
-        self.send_button.move(420, 360)
+        self.send_button.move(310, 430)
+        self.send_button.resize(290,47)
         self.send_button.clicked.connect(self.send_data)
         
         self.config_button = QtWidgets.QPushButton("Configure", self)
-        self.config_button.move(520, 10)
+        self.config_button.move(10, 10)
+        self.config_button.resize(590,30)
         self.config_button.clicked.connect(self.on_config_button_clicked)
 
         self.serial = QSerialPort()
@@ -98,11 +103,14 @@ class Chatty(QtWidgets.QMainWindow):
         self.serial.open(QtCore.QIODevice.ReadWrite)
     def on_serial_ready_read(self):
         data = self.serial.readAll()
-        self.received_data_text_edit.append(data.data().decode())
+        self.received_data_text_edit.append("Received : "+data.data().decode())
     def send_data(self):
-        data = self.sent_data_text_edit.toPlainText()
-        self.serial.write(data.encode())
-        self.sent_data_text_edit.clear()
+        if self.serial.isOpen():
+            data = self.sent_data_text_edit.toPlainText()
+            self.serial.write(data.encode())
+            self.sent_data_text_edit.clear()
+        else:
+            QtWidgets.QMessageBox.critical(self, "Error", "Serial Port is not open")    
     def handleError(self, error):
         if error == QSerialPort.NoError:
             return
