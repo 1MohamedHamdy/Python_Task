@@ -68,7 +68,7 @@ class Chatty(QtWidgets.QMainWindow):
                         self.serial.setDataBits(QSerialPort.Data7)
                     elif data_bit == "8":
                         self.serial.setDataBits(QSerialPort.Data8)
-                    parity = ["None", "Even", "Odd", "Mark", "Space"]
+                    parity = ["None", "Even", "Odd"]
                     parity, ok = QtWidgets.QInputDialog.getItem(self, "Parity", "Select the parity:", parity, 0, False)
                     if ok:
                         if parity == "None":
@@ -77,17 +77,11 @@ class Chatty(QtWidgets.QMainWindow):
                             self.serial.setParity(QSerialPort.EvenParity)
                         elif parity == "Odd":
                             self.serial.setParity(QSerialPort.OddParity)
-                        elif parity == "Mark":
-                            self.serial.setParity(QSerialPort.MarkParity)
-                        elif parity == "Space":
-                            self.serial.setParity(QSerialPort.SpaceParity)
-                        stop_bits = ["1", "1.5", "2"]
+                        stop_bits = ["1", "2"]
                         stop_bit, ok = QtWidgets.QInputDialog.getItem(self, "Stop Bits", "Select the stop bits:", stop_bits, 0, False)
                         if ok:
                             if stop_bit == "1":
                                 self.serial.setStopBits(QSerialPort.OneStop)
-                            elif stop_bit == "1.5":
-                                self.serial.setStopBits(QSerialPort.OneAndHalfStop)
                             elif stop_bit == "2":
                                 self.serial.setStopBits(QSerialPort.TwoStop)
                             flow_control = ["None", "Hardware", "Software"]
@@ -104,7 +98,7 @@ class Chatty(QtWidgets.QMainWindow):
         self.serial.open(QtCore.QIODevice.ReadWrite)
     def on_serial_ready_read(self):
         data = self.serial.readAll()
-        self.received_data_text_edit.append("Received : "+data.data().decode())
+        self.received_data_text_edit.append(data.data().decode())
     def send_data(self):
         if self.serial.isOpen():
             data = self.sent_data_text_edit.toPlainText()
