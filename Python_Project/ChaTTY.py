@@ -55,6 +55,7 @@ class Chatty(QtWidgets.QMainWindow):
             self.serial.setPortName(port)
             baud_rates = ["4800", "9600", "19200", "38400", "57600", "115200"]
             baud_rate, ok = QtWidgets.QInputDialog.getItem(self, "Baud Rate", "Select the baud rate:", baud_rates, 5, False)
+            
             if ok:
                 self.serial.setBaudRate(int(baud_rate))
                 data_bits = ["5", "6", "7", "8"]
@@ -93,12 +94,16 @@ class Chatty(QtWidgets.QMainWindow):
                                     self.serial.setFlowControl(QSerialPort.HardwareControl)
                                 elif flow_control == "Software":
                                     self.serial.setFlowControl(QSerialPort.SoftwareControl)
+                            
         self.serial.readyRead.connect(self.on_serial_ready_read)
         self.serial.error.connect(self.handleError)
         self.serial.open(QtCore.QIODevice.ReadWrite)
     def on_serial_ready_read(self):
         data = self.serial.readAll()
-        self.received_data_text_edit.append(data.data().decode())
+        self.received_data_text_edit.insertPlainText(data.data().decode())
+        self.received_data_text_edit.moveCursor(QtGui.QTextCursor.End)
+        
+       
     def send_data(self):
         if self.serial.isOpen():
             data = self.sent_data_text_edit.toPlainText()
@@ -134,6 +139,7 @@ class Chatty(QtWidgets.QMainWindow):
         else:
             QtWidgets.QMessageBox.critical(self, "Error", "An error has occurred")
     
+        
 
 if __name__ == '__main__':
     app = QtWidgets.QApplication(sys.argv)
