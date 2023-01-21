@@ -44,11 +44,6 @@ class Chatty(QtWidgets.QMainWindow):
         self.format_combo_box.setParent(self)
         self.format_combo_box.setGeometry(310, 432, 290, 43)
     
-        #self.format_combo_box = QtWidgets.QComboBox()
-        #self.format_combo_box.addItems(["Characters", "Hexadecimal"])
-        #self.format_combo_box.currentIndexChanged.connect(self.on_format_changed)
-        #self.layout.addWidget(self.format_combo_box)
-        
         self.config_button = QtWidgets.QPushButton("Configure", self)
         self.config_button.move(10, 10)
         self.config_button.resize(590,30)
