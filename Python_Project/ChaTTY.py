@@ -1,5 +1,6 @@
 import sys
 from PyQt5 import QtCore, QtGui, QtWidgets
+
 from PyQt5.QtSerialPort import QSerialPort, QSerialPortInfo
 from PyQt5.Qt import QColor,QIcon
 
@@ -13,7 +14,7 @@ class Chatty(QtWidgets.QMainWindow):
         
         self.received_data_text_edit = QtWidgets.QTextEdit(self)
         self.received_data_text_edit.setReadOnly(True)
-        self.received_data_text_edit.move(10, 50)
+        self.received_data_text_edit.move(310, 50)
         self.received_data_text_edit.resize(290, 380)
         font = QtGui.QFont("Courier")
         self.received_data_text_edit.setFont(font)
@@ -23,7 +24,7 @@ class Chatty(QtWidgets.QMainWindow):
 
         self.sent_data_text_edit = QtWidgets.QTextEdit(self)
         self.sent_data_text_edit.setReadOnly(False)
-        self.sent_data_text_edit.move(310, 50)
+        self.sent_data_text_edit.move(10, 50)
         self.sent_data_text_edit.resize(290, 380)
         self.sent_data_text_edit.setCursorWidth(0)
         font = QtGui.QFont("Courier")
@@ -33,9 +34,20 @@ class Chatty(QtWidgets.QMainWindow):
 
 
         self.send_button = QtWidgets.QPushButton("Send", self)
-        self.send_button.move(310, 430)
+        self.send_button.move(10, 430)
         self.send_button.resize(290,47)
         self.send_button.clicked.connect(self.send_data)
+        
+        self.format_combo_box = QtWidgets.QComboBox()
+        self.format_combo_box.addItems(["Characters", "Hexadecimal"])
+        self.format_combo_box.currentIndexChanged.connect(self.on_format_changed)
+        self.format_combo_box.setParent(self)
+        self.format_combo_box.setGeometry(310, 432, 290, 43)
+    
+        #self.format_combo_box = QtWidgets.QComboBox()
+        #self.format_combo_box.addItems(["Characters", "Hexadecimal"])
+        #self.format_combo_box.currentIndexChanged.connect(self.on_format_changed)
+        #self.layout.addWidget(self.format_combo_box)
         
         self.config_button = QtWidgets.QPushButton("Configure", self)
         self.config_button.move(10, 10)
@@ -94,14 +106,19 @@ class Chatty(QtWidgets.QMainWindow):
                                     self.serial.setFlowControl(QSerialPort.HardwareControl)
                                 elif flow_control == "Software":
                                     self.serial.setFlowControl(QSerialPort.SoftwareControl)
+                                
                             
-        self.serial.readyRead.connect(self.on_serial_ready_read)
+        self.serial.readyRead.connect(self.on_format_changed)
         self.serial.error.connect(self.handleError)
         self.serial.open(QtCore.QIODevice.ReadWrite)
-    def on_serial_ready_read(self):
+    '''def on_serial_ready_read(self):
         data = self.serial.readAll()
         self.received_data_text_edit.insertPlainText(data.data().decode())
-        self.received_data_text_edit.moveCursor(QtGui.QTextCursor.End)
+        self.received_data_text_edit.moveCursor(QtGui.QTextCursor.End)'''
+       
+
+
+        #self.received_data_text_edit.append(data.data().decode())
         
        
     def send_data(self):
@@ -110,7 +127,20 @@ class Chatty(QtWidgets.QMainWindow):
             self.serial.write(data.encode())
             self.sent_data_text_edit.clear()
         else:
-            QtWidgets.QMessageBox.critical(self, "Error", "Serial Port is not open")    
+            QtWidgets.QMessageBox.critical(self, "Error", "Serial Port is not open")
+    def on_format_changed(self):
+        data = self.serial.readAll()
+        if self.format_combo_box.currentText() == "Characters":
+            #self.received_data_text_edit.append(data.data().decode())
+            self.received_data_text_edit.setPlainText(self.received_data_text_edit.toPlainText() + data.data().decode())
+        elif self.format_combo_box.currentText() == "Hexadecimal":
+            hex_data = " ".join("{:02x}".format(c) for c in data.data())
+            #self.received_data_text_edit.append(hex_data)
+            self.received_data_text_edit.setPlainText(self.received_data_text_edit.toPlainText() + hex_data)
+        
+            
+       
+        
     def handleError(self, error):
         if error == QSerialPort.NoError:
             return
