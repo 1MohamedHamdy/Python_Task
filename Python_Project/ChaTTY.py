@@ -42,8 +42,8 @@ class Chatty(QtWidgets.QMainWindow):
         self.format_combo_box.addItems(["Characters", "Hexadecimal"])
         self.format_combo_box.currentIndexChanged.connect(self.on_format_changed)
         self.format_combo_box.setParent(self)
-        self.format_combo_box.setGeometry(310, 432, 290, 43)
-    
+        self.format_combo_box.setGeometry(310, 432, 290, 44)
+            
         self.config_button = QtWidgets.QPushButton("Configure", self)
         self.config_button.move(10, 10)
         self.config_button.resize(590,30)
@@ -106,16 +106,7 @@ class Chatty(QtWidgets.QMainWindow):
         self.serial.readyRead.connect(self.on_format_changed)
         self.serial.error.connect(self.handleError)
         self.serial.open(QtCore.QIODevice.ReadWrite)
-    '''def on_serial_ready_read(self):
-        data = self.serial.readAll()
-        self.received_data_text_edit.insertPlainText(data.data().decode())
-        self.received_data_text_edit.moveCursor(QtGui.QTextCursor.End)'''
-       
-
-
-        #self.received_data_text_edit.append(data.data().decode())
-        
-       
+               
     def send_data(self):
         if self.serial.isOpen():
             data = self.sent_data_text_edit.toPlainText()
@@ -126,11 +117,9 @@ class Chatty(QtWidgets.QMainWindow):
     def on_format_changed(self):
         data = self.serial.readAll()
         if self.format_combo_box.currentText() == "Characters":
-            #self.received_data_text_edit.append(data.data().decode())
             self.received_data_text_edit.setPlainText(self.received_data_text_edit.toPlainText() + data.data().decode())
         elif self.format_combo_box.currentText() == "Hexadecimal":
             hex_data = " ".join("{:02x}".format(c) for c in data.data())
-            #self.received_data_text_edit.append(hex_data)
             self.received_data_text_edit.setPlainText(self.received_data_text_edit.toPlainText() + hex_data)
         
             
