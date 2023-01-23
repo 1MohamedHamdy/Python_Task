@@ -6,7 +6,9 @@ ChaTTY is a serial communication Tool via UART,it should works on Windows, MacOS
 when you run this tool , you will see : 
 - 2 window one for send and another for receive
 - 2 buttons one for Selecting Configurations , another for sending massage 
-- combo box you can received massage as characters or Hexa ##
+- combo box you can received massage as characters or Hexa 
+ <br><br>
+ 
 first you should select your serial communication configuration from configure button : serial port , Data_bits , parity_bit,....
 it detects Serial port automatic.
 after you Selected Configuration , You now able to send or receive messages via UART 
