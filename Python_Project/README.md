@@ -3,16 +3,10 @@
 ChaTTY is a serial communication Tool via UART,it should works on Windows, MacOS and Linux.
 
 ## Description
-when you run this tool , you will see : 
-- 2 window one for send and another for receive
-- 2 buttons one for Selecting Configurations , another for sending massage 
-- combo box you can received massage as characters or Hexa 
- <br><br>
- 
-first you should select your serial communication configuration from configure button : serial port , Data_bits , parity_bit,....
-it detects Serial port automatic.
-after you Selected Configuration , You now able to send or receive messages via UART 
-You can send messages by typing in the send window and click send button,If you want the message you write not to appear on the window You can at first write on 
-character and remove it then write your message in hidden mode . 
-you can receive messages on receive window and from combobox you can select if you want to receive message as Characters or Hexadecimal .
-If anything goes wrong , the tool will show you an error message.
+When you run this tool, you will see:
+
+- There are two windows, one for sending and one for receiving.
+- There are two buttons: one for selecting configurations and another for sending massages.
+- combo box, you can receive messages as characters or hexa
+<br>
+First, you should select your serial communication configuration from the configure button: serial port, data bits, parity bits,  etc. It detects the serial port automatically. After you select a configuration, you are now able to send or receive messages via UART. You can send messages by typing them in the send window and clicking the send button, or by clicking the "no display" button if you don't want the message you write to appear in the window. You can first write on a character, remove it, and then write your message in hidden mode. You can receive messages on the receive window, and from the combo box, you can select if you want to receive messages as characters or hexadecimal. If anything goes wrong, the tool will show you an error message.
